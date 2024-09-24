@@ -84,3 +84,71 @@ Dengan mengirimkan permintaan palsu, Penyerang dapat membuat situs web yang berb
 
 
 
+
+
+Tugas 4
+
+1. Apa perbedaan antara HttpResponseRedirect() dan redirect()
+
+HttpResponseRedirect:
+- Hanya menerima URL sebagai argumen.
+- Mengembalikan respon HTTP dengan status 302.
+
+redirect:
+- Merupakan fungsi yang lebih fleksibel, bisa menerima URL, view Django, atau object model.
+- Pada akhirnya, tetap menghasilkan HttpResponseRedirect.
+
+2. Jelaskan cara kerja penghubungan model Product dengan User!
+Hubungan antara model Product dan model User di Django dapat dibangun menggunakan ForeignKey, yang mengizinkan setiap produk terhubung dengan satu pengguna. Hal ini memungkinkan pengelolaan data yang lebih efektif dan efisien, serta satu pengguna dapat memiliki banyak produk dan dapat dengan mudah mengakses produk-produk tersebut melalui relasi yang telah dibuat.
+
+3. Apa perbedaan antara authentication dan authorization, apakah yang dilakukan saat pengguna login? Jelaskan bagaimana Django mengimplementasikan kedua konsep tersebut.
+
+Perbedaan : 
+- authentication adalah proses memverifikasi user, hal ini harus dipenuhi agar server bisa mengklaim siapa usernya, biasanya hal ini dilakukan dengan memverifikasi username dan password, apabila dua hal tersebut sesuai dengan data yang ada pada sistem maka user tersebut dianggap sah.
+
+- authorization : proses ini dijalankan apabila user berhasil diotentikasi. pada tahap ini, sistem akan menentukan apa yang user dapat lakukan berdasarkan hak akses yang dimilikinya. 
+
+Saat pengguna Login : 
+Pertama melakukan otentikasi yaitu dengan user memasukan username serta pssword ke sistem , kemudian melakukan verifikasi untuk memastikan bahwa identitas yang baru dimasukkan sesuai dengan identitas yang tersimpan pada sistem, selanjutnya keberhasilan otentikasi yaitu apabila identitas sesuai maka sistem mengautentikasi user, dan yang terakhir adalah otoritas yaitu sistem memeriksa izin user untuk menentukan apa yang dapat dilakukan oleh user pada sistem tersebut.
+
+Bagaimana Django mengimplementasikan kedua kosep tersebut : 
+- Otentikasi : 
+Django menyediakan sistem otentikasi yang memungkinkan user untuk login dan logout dari sistem. Didasarkan pada modul "django.contrib.auth",contoh beberapa fitur yang menyediakan fitur-fitur tersebut adalah tampilan login dan logout, user, dan backend otentikasi.
+- Otoritas : 
+Sistem pada django yang memberikan akses kepada user, fitur-fiturnya antara lain : izin, group, dan Pemeriksaan izin 
+
+Dengan adanya modul django.contrib.auth, Django menyediakan sistem otentikasi yang detail serta fleksibel,  dan memungkinkan pengembang untuk dengan mudah mengelola otentikasi dan izin pengguna dalam aplikasi website.
+
+4. Bagaimana Django mengingat pengguna yang telah login? Jelaskan kegunaan lain dari cookies dan apakah semua cookies aman digunakan?
+
+Saat pengguna berhasil login, Django akan mencatat serta membuat sesi login pengguna tersebut dan pengguna akan diberikan kode unik, kode unik tersebut akan disimpan dalam cookie. Dengan cara ini, Django dapat mengenali pengguna ketika mereka melakukan login lagi ke webnya.
+Kemudian Cookies, cookies merupakan data kecil yang disimpan di browser user. APabila user mengunjungi kembali websitenya maka browser mengirimkan cookies ke server sehingga server dapat mengidentifikasi pengguna. 
+
+Kegunaan lain dari cookies : 
+- Cookies digunakan untuk melacak aktivitas user di situs web
+- Selain mengingat pengguna yang telah berhasil login, cookie juga memiliki pengingatan yang membuat kita dapat memilih opsi "ingat saya" saat kita ingin login.
+- Cookies dapat menyimpan preferensi pengguna.
+
+Apakah semua cookies aman?
+tidak, karena cookies dapat disalahgunakan apabila tidak dirawat/doijaga dan dikelola dengan baik,  Cookies menyimpan informasi pribadi yang harus dilindungi, dan kita harus mengatur flag secure cookies untuk memastikan bahwa cookies hanya dikirim melalui koneksi HTTPS, dimana hal ini akan mengurangi resiko penyadapan data.
+
+Mengingat kembali user yang berhasil login melalui sesi dan cookie, memungkinkan pengolahan otentikasi yang efisien,  sehingga cookies juga mempunyai banyak kegunaan. jadi kita harus memperhatikan keamanan dan privasi saat menggunakannya.
+
+5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+Pertama, kita membuat Fungsi dan forum registrasi.
+Mengimpor UsercreationForm dan message dari django.contrib.auth ,dimana fungsi dari usercreationform adalah untuk memudahkan pembuatan formulir pendaftaran user dalam aplikasi web. Kemudian kita menambahkan fungsi registrasi, dimana fungsi ini berfungsi untuk menghasilkan formulir registrasi dan menghasilkan akun pengguna ketika di submit. Setelah itu kita membuat berkas HTML baru yang menyajikan halaman pendaftaran untuk pengguna baru. Formulir ini mengumpulkan data pendaftaran dan mengirimkannya ke server dengan aman. Melalui sistem pesan, pengguna dapat menerima umpan balik tentang status pendaftaran. kemudian kita mengimpor fungsi registrasi di views.py dan menambahkan path url kedalam urlpatterns.
+
+Kedua, membuat fungsi Login, dengan menambahkan beberapa impor seperti authenticate, login, dan AuthenticationForm. Fungsi tersebut digunakan untuk melakukan autentikasi dan login. Kemudian kita menambah sebuah fungsi login_user di views.py dimana fungsi ini digunakan untuk melakukan login terlebih dahulu. apabila user valid, maka fungsi ini akan embaut session untuk pengguna yang berhasil login. Kemudian kita juga membuat file baru dengan nama login.html , template yang disediakan berguna untuk pengguna agar dapat masuk ke aplikasi dan menawarkan opsi untuk mendaftar jika mereka belum memiliki akun.
+
+Ketiga, Merestriksi Akses halaman main dengan menambahkan import login_required yang berfungsi untuk mengimpor sebuah decorator yang bisa mengharuskan pengguna masuk(login) terlebih dahulu sbeleum mengakses sebuah halaman web. Kemudian menambahkan @login_required(login_url='/login') agar halaman main hanya dapat diakses oleh pengguna yang sudah login, kemudian kita menjalankan projek django dan membuka http://localhost:8000/ .
+
+Keempat, Menggunakan data dari cookies dengan menambahkan data las login dan menampilkannya dihalaman main, lalu membuka file views.py dan mengimpor beberapa fungsi seperti import HttpResponseRedirect, reverse, dan datetime. kemudian kita menambahkan fungsionalitas cookie yang bernama last_login untuk melihat kapan terakhir kali pengguna melakukan login. Kemudian pada fungsi show_main kita tambahkan 'last_login': request.COOKIES['last_login'], yang berfungsi untuk menambahkan informasi cookie last_login pada response yang akan ditampilkan dihalaman web. Kemudian kita ubah fungsi logout_user  menjadi response.delete_cookie('last_login'), yang berfungsi untuk menghapus cookie last_login saat pengguna menekan logout. Kemudian kita menambahkan pesan yang akan ditampilkan di halaman utama yaitu sesi terakhir login, lalu jalankan projek django.
+
+Kelima, keterangan untuk melihat cookie pada projek saya adalah saya membuka protocol localhost di chrome dan kemudian saya klik kanan pada halaman web saya, lalu saya memilih inspect dan tanda disamping Memory (>>) lalu memilih Application dan melihat cookie nya.
+
+Keenam, Menghubungkan moodentry dengan user, dengan menambahkan import pada models.py (from django.contrib.auth.models import User)
+dan menambahkan variabel dengan nama "user" yang berisi kode untuk menghubungkan satu product entry dengan satu user melalui sebauh relationship, dimana product entry pasti terasosialisasikan dengan seorang user. lalu menambahkan beberapa kepingan kode pada file views.py dengan parameter commit=false, bergna untuk mencegah django agar tidak langsung menyimpan objek yang telah dibuat dari form langsung ke database. kemudian kita mengubah value dari product_entries dan context, gunanya kita ubah yaitu untuk menampilkan objek product__entry yang terasosiasikan dengan menyaring seluruh objek. dan kode request.user,username berfungsi untuk menampilakn username pengguna yang login. Kemudian simpan semua perubahan dan lakukan imigrasi, dan setelah itu akan ada eror yang muncul dan kita memilih angka 1 untuk menetapkan default value untuk field user pada semua row yang telah dibuat. Kemudian kita mengimoport os dan mengganti variabel DEBUG dengan kode yang telah disediakan.
+
+
+
+
