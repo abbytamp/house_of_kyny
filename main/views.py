@@ -12,10 +12,10 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.core import serializers
 
-from django.shortcuts import render, redirect 
+from django.shortcuts import render, redirect, reverse
 from main.forms import ProductEntryForm
 from main.models import ProductEntry
 
@@ -28,15 +28,15 @@ def show_main(request):
         'name': 'Abby Shelley',
         'class': 'PBP B',
         'product_entries': product_entries,
-        'last_login': request.COOKIES['last_login'],
+        'last_login': request.COOKIES.get('last_login'),
     }
 
-    return render(request, "main.html", context)
+    return render(request, "main.html", context) # mengambil 3 argumen
 
 def create_product_entry(request):
     form = ProductEntryForm(request.POST or None)
 
-    if form.is_valid() and request.method == "POST":
+    if form.is_valid() and request.method == "POST": 
         mood_entry = form.save(commit=False)
         mood_entry.user = request.user
         mood_entry.save()
@@ -94,3 +94,27 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return response
+
+def edit_product(request, id):
+    # Get mood entry berdasarkan id
+    product = ProductEntry.objects.get(pk = id)
+
+    # Set mood entry sebagai instance dari form
+    form = ProductEntryForm(request.POST or None, instance=product)
+
+    if form.is_valid() and request.method == "POST":
+        # Simpan form dan kembali ke halaman awal
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    context = {'form': form}
+    return render(request, "edit_product.html", context)
+
+
+def delete_product(request, id):
+    # Get mood berdasarkan id
+    product = ProductEntry.objects.get(pk = id)
+    # Hapus product
+    product.delete()
+    # Kembali ke halaman awal
+    return HttpResponseRedirect(reverse('main:show_main'))

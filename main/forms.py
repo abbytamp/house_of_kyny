@@ -3,5 +3,5 @@ from main.models import ProductEntry
 
 class ProductEntryForm(ModelForm):
     class Meta:
-        model = ProductEntry
+        model = ProductEntry #menunjukan model yang digunakan
         fields = ["name", "price", "description", "quantity","size"]

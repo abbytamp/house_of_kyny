@@ -150,5 +150,35 @@ Keenam, Menghubungkan moodentry dengan user, dengan menambahkan import pada mode
 dan menambahkan variabel dengan nama "user" yang berisi kode untuk menghubungkan satu product entry dengan satu user melalui sebauh relationship, dimana product entry pasti terasosialisasikan dengan seorang user. lalu menambahkan beberapa kepingan kode pada file views.py dengan parameter commit=false, bergna untuk mencegah django agar tidak langsung menyimpan objek yang telah dibuat dari form langsung ke database. kemudian kita mengubah value dari product_entries dan context, gunanya kita ubah yaitu untuk menampilkan objek product__entry yang terasosiasikan dengan menyaring seluruh objek. dan kode request.user,username berfungsi untuk menampilakn username pengguna yang login. Kemudian simpan semua perubahan dan lakukan imigrasi, dan setelah itu akan ada eror yang muncul dan kita memilih angka 1 untuk menetapkan default value untuk field user pada semua row yang telah dibuat. Kemudian kita mengimoport os dan mengganti variabel DEBUG dengan kode yang telah disediakan.
 
 
+TUGAS 5
+Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
+inline style, karena melibatkan penerapan gaya secara langsung ke elemen HTML, dimana metode ini memeungkinkan penataan elemen tertentu dalam dokumen HTML itu sendiri, Alasan lain yaitu karena spesifik di elemen tertentu yang artinya inline style hanya memengaruhi elemen tertentu yang dianggap sebagai aturan yang spesifik dibandingkan dengan selektor lain.
 
+Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design!
+Karena ini adalah metode sistem desain web yang mempunyai tujuan menghasilkan tampilan web yang terlihat baik pada seluruh perangkat seperti dekstop, tablet,mobile,dll.
+Contoh aplikasi : 
 
+Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
+Margin : mengosongkan area di sekitar border(transparan)
+Border : faris tepian yang membungkus konten dan paddingnya
+Padding : mengosongkan area di sekitar konten (transparan)
+Caranya dengan contoh yaitu : 
+.element {
+  margin: 20px;
+  border: 2px solid black;
+  padding: 15px;
+}
+Pada kode diatas, margin mengosongkan area di luar border, padding mengosongkan area di dalam border, dan border adalah garis di antara margin dan padding.
+
+Jelaskan konsep flex box dan grid layout beserta kegunaannya!
+flexbox : layout model satu dimensi yang dirancang mendistribusikan ruang diantara dalam satu baris atau kolom serta mempunyai kegunaan untuk mengatur elemen-elemen dalam tata letas linear.
+grid layout : model dua dimensi yang memungkinkan penataan elemen dalam baris dan kolom, serta membuat struktut grid yang repsonsif dan multi-kolom. 
+Keduanya digunakan untuk menciptakan tata letak responsif dan dinamis, tetapi Flexbox lebih fokus pada arah satu dimensi (baris atau kolom), sementara Grid mengelola arah dua dimensi (baris dan kolom).
+
+Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
+pertama, kita menambahkan tailwind ke aplikasi dengan mengakses project Django kita, lalu membuka file base.html dan menambahkan tag <metaname="viewport>, lalu untuk menyambungkan template Django dengan tailwind, kita memanfaatkan script CDN.
+Kedua, menambahkan fitur edit product pada aplikasi, dengan membuka views.py dan membuat fungsi baru serta menambahkan import pada views.py dan membuka berkas edit_mood.html serta membuka urls.py dan menambahkan beberapa import dan menambahkan path url didalam urlpatterns. Kemudian menambahkan {% url 'main:edit_product' mood_entry.pk %} untuk membangun URL.
+Ktiga, menambahkan fitur Hapus mood pada aplikasi, dengan membuat fungsi dengan nama delete_mood di views.py dan membuka urls.py dan menambahkan beberapa import serta path url ke urlpatterns. Lalu membuka file main.html dan menambahkan url delete_moodnya.
+Keempat, menambahkan Navigation Bar pada Aplikasi, menambahkan file navbar.html di templates yang sejajar dengan main lalu kaitkan main,html , create_product_entry.html, dan edit_product.html 
+Kelima, konfigurasi static Files pada aplikasi, dengan menambahkan 'whitenoise.middleware.WhiteNoiseMiddleware' pada file settings.py dan memastikan variabel static_root , staticfiles_dirs, dan static_url dikonfigurasi.
+Keenam, langkah ini adalah opsional jika kita ingin membuat gambar maka kita harus mengimpor gambar tersebut dahulu lalu memasukannya dalam folder static, dimana folder tersebut berisi folder css dan folder image. Lalu menghubungkan global.css dan script tailwind ke base.html, serta men custom styling ke global.css serta melakukan styling pada halaman login, kemudian kita membuat halaman juga di register.html lalu styling halaman home dan membuat card_product.html di folder main/templates, lalu kita styling lagi halaman create Product Entry dan styling halaman edit product.

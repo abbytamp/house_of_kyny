@@ -12,4 +12,3 @@ class ProductEntry(models.Model):
     quantity = models.IntegerField()
     size = models.CharField(max_length=5)
 
-
