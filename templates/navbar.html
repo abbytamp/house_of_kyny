@@ -20,7 +20,17 @@
         <div class="hidden sm:ml-6 sm:block">
           <div class="flex space-x-4">
             <a href="{% url 'main:show_main' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Home</a>
-            <a href="{% url 'main:create_product_entry' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Create Product</a>
+            <!-- <a href="{% url 'main:create_product_entry' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Create Product</a>
+            <a href="{% url 'main:add_product_entry_ajax' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Create Product by ajax</a>
+             -->
+            <a href="{% url 'main:create_product_entry' %}" class="bg-black hover:bg-black text-gray-100 font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 mx-4 ">
+                Add New Product Entry
+            </a>
+            <button data-modal-target="crudModal" data-modal-toggle="crudModal" class="btn bg-black hover:bg-black text-gray-100 font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105" onclick="showModal();">
+              Add New Product by AJAX
+            </button>
+
+
             {% if user.is_authenticated %}
               <!-- <span class="text-white">Happy Shopping, {{ user.username }}</span> -->
               <a href="{% url 'main:logout' %}" class="block rounded-md bg-red-600 hover:bg-red-700 text-white font-bold px-3 py-2">Logout</a>
@@ -56,8 +66,20 @@
   <!-- Mobile menu, show/hide based on menu state. -->
   <div class="sm:hidden" id="mobile-menu">
     <div class="space-y-1 px-2 pb-3 pt-2">
-      <a href="{% url 'main:show_main' %}" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white" aria-current="page">Home</a>
+      <a href="{% url 'main:show_main' %}" class="block rounded-md bg-gray-100 px-3 py-2 text-base font-medium text-white" aria-current="page">Home</a>
+
+<!-- 
       <a href="{% url 'main:create_product_entry' %}" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Create Product</a>
+      <a href="{% url 'main:add_product_entry_ajax' %}" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Create Product by ajax</a> -->
+
+      
+      <a href="{% url 'main:create_product_entry' %}" class="bg-black hover:bg-black text-gray-900 font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 mx-4 ">
+          Add New Product Entry
+      </a>
+      <button data-modal-target="crudModal" data-modal-toggle="crudModal" class="btn bg-black hover:bg-black text-gray-100 font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105" onclick="showModal();">
+        Add New Product by AJAX
+      </button>
+
       {% if user.is_authenticated %}
         <!-- <span class="block text-white">Happy Shopping, {{ user.username }}</span> -->
         <a href="{% url 'main:logout' %}" class="block rounded-md bg-red-600 hover:bg-red-700 text-white font-bold px-3 py-2">Logout</a>

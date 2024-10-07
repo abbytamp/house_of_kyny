@@ -182,3 +182,43 @@ Ktiga, menambahkan fitur Hapus mood pada aplikasi, dengan membuat fungsi dengan 
 Keempat, menambahkan Navigation Bar pada Aplikasi, menambahkan file navbar.html di templates yang sejajar dengan main lalu kaitkan main,html , create_product_entry.html, dan edit_product.html 
 Kelima, konfigurasi static Files pada aplikasi, dengan menambahkan 'whitenoise.middleware.WhiteNoiseMiddleware' pada file settings.py dan memastikan variabel static_root , staticfiles_dirs, dan static_url dikonfigurasi.
 Keenam, langkah ini adalah opsional jika kita ingin membuat gambar maka kita harus mengimpor gambar tersebut dahulu lalu memasukannya dalam folder static, dimana folder tersebut berisi folder css dan folder image. Lalu menghubungkan global.css dan script tailwind ke base.html, serta men custom styling ke global.css serta melakukan styling pada halaman login, kemudian kita membuat halaman juga di register.html lalu styling halaman home dan membuat card_product.html di folder main/templates, lalu kita styling lagi halaman create Product Entry dan styling halaman edit product.
+
+
+
+
+
+
+
+TUGAS 6
+
+1. Jelaskan manfaat dari penggunaan JavaScript dalam pengembangan aplikasi web!
+Dalam pengembangan web umumnya kode javaScript digunakan pada client-side suatu web (client-side JavaScript). JavaScript memungkinkan pengembangan untuk menciptakan halaman web yang interaktif dan responsif. Jadi dengan adanya JavaScript, perubahan pada halaman web dapat dilakukan secara langsung tanpa memuat ulang seluruh halaman. JavaScript digunakan untuk memperbarui elemen halaman secara dinamis. Kemudian Javascript juga memungkinkan untuk pengembangan fitur-fitur seperti lazy loading, animasi, dan elemen-elemen dinamis lainnya.Kemudian Javascript juga mengelola Cookie dan penyimpnanan lokal, yang membantu untuk melacak informasi pengguna seperti preferensi atau status login. Selain itu, JavaScript dapat menyimpan data secara lokal di browser pengguna menggunakan LocalStorage atau SessionStorage, memungkinkan aplikasi tetap berjalan tanpa terus-menerus berkomunikasi dengan server.
+
+2. Jelaskan fungsi dari penggunaan await ketika kita menggunakan fetch()! Apa yang akan terjadi jika kita tidak menggunakan await?
+- Promise akan segera dikembalikan, bukan hasil dari respons HTTP yang sudah diproses. Artinya, variabel yang seharusnya berisi hasil data (seperti data pada contoh kode di atas) hanya akan berisi objek Promise, bukan data aktual yang diinginkan.
+- Kode berikutnya akan dieksekusi sebelum respons HTTP diterima, yang bisa menyebabkan error atau hasil yang tidak diharapkan.
+- kita perlu menggunakan metode .then() untuk menangani hasil dari Promise tersebut secara manual, yang mungkin membuat kode menjadi lebih rumit dan tidak sebersih saat menggunakan async/await.
+
+3.  Mengapa kita perlu menggunakan decorator csrf_exempt pada view yang akan digunakan untuk AJAX POST?
+Karena decorator csrf_exempt membuat Django tidak perlu mengecek keberadaan csrf_token pada POST request yang akan dikirimkan ke fungsi add_product_entry_ajax
+
+4. Pada tutorial PBP minggu ini, pembersihan data input pengguna dilakukan di belakang (backend) juga. Mengapa hal tersebut tidak dilakukan di frontend saja?
+Keamanan Aplikasi: Salah satu ancaman signifikan dalam aplikasi web adalah Cross-Site Scripting (XSS), di mana penyerang dapat menyisipkan kode JavaScript berbahaya ke dalam form atau input lainnya. Kode ini kemudian dieksekusi di browser pengguna lain. Jika pembersihan dan validasi hanya dilakukan di frontend, penyerang dapat dengan mudah memodifikasinya (misalnya, dengan menggunakan alat debugging di browser atau mengirim permintaan manual ke server). Pembersihan di sisi backend memastikan bahwa semua data yang masuk ke sistem telah melalui validasi dan pemrosesan yang tepat sebelum disimpan atau digunakan, sehingga melindungi aplikasi dari potensi eksploitasi.
+
+Pengendalian dan Validasi Ganda: Pengguna memiliki kemampuan untuk menonaktifkan atau memodifikasi JavaScript di browser mereka, yang berarti validasi di frontend bisa dilewati. Oleh karena itu, sangat penting untuk melakukan pembersihan data di backend guna memastikan bahwa data yang diterima oleh sistem adalah valid dan aman. Validasi di frontend membantu memberikan pengalaman pengguna yang lebih baik dengan memberikan umpan balik langsung, tetapi validasi di backend memastikan keamanan dan integritas data.
+
+Data Harus Bersih Sebelum Disimpan: Semua data yang diterima dari pengguna harus dipastikan keamanannya sebelum disimpan di basis data. Jika pembersihan hanya dilakukan di frontend, ada risiko data berbahaya tersimpan di server ketika validasi frontend dilewati. Hal ini bisa menimbulkan masalah seperti serangan XSS di masa mendatang ketika data tersebut ditampilkan kembali di antarmuka pengguna.
+
+Mengatasi Penggunaan API atau Layanan Pihak Ketiga: Seringkali, aplikasi web menerima data dari sumber lain seperti API atau layanan pihak ketiga selain dari form HTML di frontend. Dalam kasus ini, data yang diterima mungkin tidak melalui validasi frontend. Oleh karena itu, melakukan pembersihan di backend sangat penting untuk menjaga keamanan dan memastikan integritas data yang diterima.
+
+5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
+Langka pertama , tambahin eror message pada login, dimana akan menempelkan pesan eror kepada request yang mengirimkan permintaan login, yang nnatinya akan ditempelkan di template login html.
+Kedua, membuat Fungsi untuk menambahkan mood dengan AJAX. dengan menambhakan import dan membuat fungsi baru di views.py dengan nama add_product_entry_ajax.
+Ketiga, menambahkan routing untuk fungsi add_product_entry_ajax, dengan membuka urls.py pada direktori main dan mengimpor fungsi yang sudah kita buat serta menambahkan path url ke urlpatterns untuk mengakses fungsi impor yang sudah diimpor tadi.
+Keempat, menampilkan data Product Entry dengan fetch() API. dengan meghapus 2 baris pada file views.py dan mengubah baris pertama pada fungsi show_xml dan show_json dengan : data = MoodEntry.objects.filter(user=request.user). Lalu membuka file main.html dan menghapus bagian block conditional product_entries untuk menampilkan card_product ketika kosong atau tidak. Kemudian membuat block <script> di bagian bawah berkas kamu (sebelum {% endblock content %}) dan buatlah fungsi baru pada block <script> tersebut dengan nama getProductEntries. Kemudian memebuat fungsi baru pada block <script> dengan nama refreshProductEntries yang digunakan untuk me-refresh data moods secara asinkronus.
+Kelima, membuat modal sebagai form untuk menambahkan mood. agar modal dapat berfungsi, kita perlu menambahkan fungsi-fungsi JavaScript.
+Keenam, menambahkan data Product dengan AJAX. dimana modal dengan form yang telah kita buat tadi digunakan untuk menambhakan data product. sehingga kita perlu membuat fungsi JavaScript, kemudian tambahin sebuah event listener pada form di modal untuk menjalankan fungsi addProductEntry().
+Ketujuh, melindungi aplikasi dari cross site scripting(XSS), dengan menambahkan data product baru dengan nilai field. field lain dapat diisi sesuai dengan keinginan kita lalu tekan tombol simpan dan jika penyimpanan berhasil maka kita akan mendapatkan pesan alert dengan nilai xss. Kemudian kita menambahkan strips_tags untuk memebersihkan data baru  dengan membuka berkas views.py dan menambahkan import strip_tags dan pada fungsi add_product_entry_ajax kita gunakan fungsi strip_tags pada data product. Kemudian kita menambahkan strips_tags dan hapus data product yang tadi kita tambahin, membersihkan data dengan DOMPurify dengan membuka main.html dan pada fungsi refreshProductEntries kita menambahakan potongan kode : 
+    const mood = DOMPurify.sanitize(item.fields.mood);
+    const feelings = DOMPurify.sanitize(item.fields.feelings); yang disesuaikan dengan kode yang kita miliki, contohnya saya ingin ada name,price,description, size,quantity.
+Dan yang terakhir kita me-refresh halaman utama kita dan alert box tidak akan muncul lagi di browser kita.
